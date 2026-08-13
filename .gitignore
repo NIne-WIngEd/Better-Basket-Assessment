@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+cache/
+tmp/
+deterministic/
+gpt_queue/
+gpt_overrides/
+input_cache/
+single_product/
+*.sqlite
+*.pkl
+*.tmp

@@ -1,0 +1,16 @@
+{
+  "version": "audited_v17_final_submission_count_uniqueness_guard",
+  "artifact_role": "derived_documentation_view",
+  "runtime_source_of_truth": "betterbasket_runtime_config.json",
+  "calibration": {
+    "match": {
+      "coefficient": 6.564689133174299,
+      "intercept": -5.141619688855791
+    },
+    "nonmatch": {
+      "coefficient": 8.309152766631854,
+      "intercept": -3.6557118086781757
+    }
+  },
+  "note": "Match and Non-match calibrated scores are independent evidence confidences, not complements."
+}

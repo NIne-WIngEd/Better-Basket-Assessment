@@ -1,0 +1,32 @@
+{
+  "version": "audited_v17_final_submission_count_uniqueness_guard",
+  "artifact_role": "derived_documentation_view",
+  "runtime_source_of_truth": "betterbasket_runtime_config.json",
+  "router": {
+    "min_quantity_similarity": 0.72,
+    "same_brand_min_raw": 0.52,
+    "same_brand_min_functional": 0.82,
+    "same_brand_min_support": 0.1,
+    "same_brand_min_margin": 0.01,
+    "private_min_raw": 0.52,
+    "private_min_functional": 0.88,
+    "private_min_support": 0.1,
+    "private_min_margin": 0.015,
+    "general_min_raw": 0.68,
+    "general_min_functional": 0.9,
+    "general_min_support": 0.2,
+    "general_min_margin": 0.03,
+    "match_max_nonmatch_confidence": 0.35,
+    "nonmatch_raw_below": 0.4,
+    "nonmatch_support_below": 0.055,
+    "nonmatch_functional_below": 0.38,
+    "nonmatch_confidence_above": 0.7,
+    "review_raw_min": 0.46,
+    "review_raw_max": 0.78,
+    "review_functional_min": 0.52,
+    "review_support_min": 0.08,
+    "unknown_quantity_min_raw": 0.6,
+    "unknown_quantity_min_functional": 0.9,
+    "unknown_quantity_min_margin": 0.03
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "version": "audited_v17_final_submission_count_uniqueness_guard",
+  "retrieval": {
+    "candidate_k": 20,
+    "pool_k": 20,
+    "deep_k": 3,
+    "deep_cap": 5,
+    "validation_note": "v11 retains the compact global retrieval floor but adds always-on same-brand rescue and cross-retailer private-label rescue. The v10 200-pair benchmark was found to be unrepresentative of full-catalog low-score same-brand/private-label cases.",
+    "min_deep_retrieval_score": 3.2
+  },
+  "batch_size": 2500,
+  "gpt": {
+    "top_k": 2,
+    "group_size": 24,
+    "concurrency": 12,
+    "gate": {
+      "min_pair_support": 0.08,
+      "min_raw_match": 0.32,
+      "min_functional_identity": 0.76
+    },
+    "max_products_per_batch": 400,
+    "max_total_products": 12000,
+    "request_timeout_seconds": 35,
+    "reasoning_effort": "low",
+    "secondary_reasoning_effort": "medium",
+    "secondary_max_products": 1200,
+    "secondary_group_size": 12,
+    "secondary_concurrency": 8,
+    "max_completion_tokens": 5000
+  },
+  "calibration": {
+    "match": {
+      "coefficient": 6.564689133174299,
+      "intercept": -5.141619688855791
+    },
+    "nonmatch": {
+      "coefficient": 8.309152766631854,
+      "intercept": -3.6557118086781757
+    }
+  },
+  "router": {
+    "min_quantity_similarity": 0.72,
+    "same_brand_min_raw": 0.52,
+    "same_brand_min_functional": 0.82,
+    "same_brand_min_support": 0.1,
+    "same_brand_min_margin": 0.01,
+    "private_min_raw": 0.52,
+    "private_min_functional": 0.88,
+    "private_min_support": 0.1,
+    "private_min_margin": 0.015,
+    "general_min_raw": 0.68,
+    "general_min_functional": 0.9,
+    "general_min_support": 0.2,
+    "general_min_margin": 0.03,
+    "match_max_nonmatch_confidence": 0.35,
+    "nonmatch_raw_below": 0.4,
+    "nonmatch_support_below": 0.055,
+    "nonmatch_functional_below": 0.38,
+    "nonmatch_confidence_above": 0.7,
+    "review_raw_min": 0.46,
+    "review_raw_max": 0.78,
+    "review_functional_min": 0.52,
+    "review_support_min": 0.08,
+    "unknown_quantity_min_raw": 0.6,
+    "unknown_quantity_min_functional": 0.9,
+    "unknown_quantity_min_margin": 0.03
+  },
+  "minimum_submission_requirement": 4000,
+  "minimum_is_not_target": true,
+  "worker_chunk_size": 2500,
+  "deterministic_worker_concurrency": 4,
+  "performance_notes": "v17 FINAL preserves the v16 hot path and all numeric retrieval/router/GPT settings: compact rare-token/spec retrieval, 2,500-row short-lived workers, adaptive deterministic concurrency up to 4, SQLite Store-B detail storage, persistent lazy B-fact caching, deep scoring only for top 3 plus protected exact-title candidates, GPT groups of 24 with concurrency 12, and the bounded secondary medium-reasoning pass. The only normal-path addition is one final exact-SKU identity/catalog guard over provisional MATCH rows using the same single batched Store-B metadata read already used by final merge; checks are in-memory and add no full-catalog retrieval, evidence-scoring, candidate-rescoring, or API pass. Azure content-filter recovery recursively splits only rejected GPT groups to isolate the offending retail title while leaving normal batches unchanged. The clean submission launcher automatically invokes betterbasket_final_certification.py after final merge; this pass touches only certified MATCH rows and the already-built Store-B metadata cache. The final frozen polish also enforces national-brand many-to-one package-count uniqueness: if one B item_id receives incompatible explicit A counts, B metadata must identify the supported count or the conflicting counted rows are deferred to REVIEW."
+}

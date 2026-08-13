@@ -1,0 +1,638 @@
+{
+  "spec_name": "BetterBasket Candidate Retrieval Specification",
+  "version": "1.0.0",
+  "status": "design_baseline_before_recall_tuning",
+  "purpose": "For each Store A product, retrieve a small high-recall set of Store B candidates. This module must NOT decide whether a pair is a match.",
+  "core_objective": {
+    "primary": "maximize_true_match_survival",
+    "target_pair_completeness_recall_at_50": 0.995,
+    "secondary": "reduce downstream pair comparisons",
+    "precision_is_not_primary_here": true,
+    "hard_rule": "Never reject a candidate solely because brand, size, category, flavor, or another attribute is missing or different."
+  },
+  "dataset_profile_observed": {
+    "store_a_rows": 233199,
+    "store_b_rows": 55516,
+    "full_cartesian_pairs": 12946275684,
+    "columns_a": [
+      "item_id",
+      "name",
+      "brand_raw",
+      "name_clean",
+      "description",
+      "category",
+      "department",
+      "url",
+      "item_type",
+      "item_info",
+      "tags",
+      "subcategory",
+      "is_private_label",
+      "sizing_comp",
+      "size_raw",
+      "datapoint_id",
+      "raw_data_id",
+      "created_at_utc",
+      "updated_at_utc"
+    ],
+    "columns_b": [
+      "item_id",
+      "name",
+      "brand_raw",
+      "name_clean",
+      "description",
+      "category",
+      "department",
+      "url",
+      "is_organic",
+      "item_info",
+      "tags",
+      "subcategory",
+      "sizing_comp",
+      "size_raw",
+      "datapoint_id",
+      "raw_data_id",
+      "created_at_utc",
+      "updated_at_utc"
+    ],
+    "field_coverage_percent": {
+      "a_name": 100.0,
+      "b_name": 100.0,
+      "a_brand_raw": 54.1,
+      "b_brand_raw": 90.0,
+      "a_description": 8.1,
+      "b_description": 93.6,
+      "a_item_info": 94.2,
+      "b_item_info": 100.0,
+      "a_sizing_comp": 94.2,
+      "b_sizing_comp": 100.0,
+      "a_size_user_friendly_inside_sizing_comp": 17.05,
+      "b_size_user_friendly_inside_sizing_comp": 95.63,
+      "a_tags": 0.0,
+      "b_tags": 77.3
+    },
+    "important_data_constraints": [
+      "Top-level category, department, subcategory, name_clean, and size_raw are empty in both datasets.",
+      "Useful taxonomy is embedded inside item_info.category_0..category_3.",
+      "A and B taxonomies are not directly aligned; exact category equality is forbidden as a retrieval gate.",
+      "A has much weaker brand, description, tag, and explicit-size coverage than B.",
+      "Store A includes grocery and many non-grocery departments; retrieval must be category-adaptive."
+    ]
+  },
+  "normalization_pipeline": {
+    "text": [
+      "Unicode NFKC normalization",
+      "lowercase",
+      "HTML strip for descriptions",
+      "normalize ampersand to 'and'",
+      "normalize apostrophes/dashes/slashes",
+      "collapse whitespace",
+      "preserve informative alphanumeric tokens",
+      "create both punctuation-stripped and character-preserving forms"
+    ],
+    "units": {
+      "mass": {
+        "oz": "ounce",
+        "ounces": "ounce",
+        "lb": "pound",
+        "lbs": "pound",
+        "g": "gram",
+        "kg": "kilogram"
+      },
+      "volume": {
+        "fl oz": "fluid_ounce",
+        "fluid ounces": "fluid_ounce",
+        "ml": "milliliter",
+        "l": "liter"
+      },
+      "count": {
+        "ct": "count",
+        "cnt": "count",
+        "pk": "pack",
+        "pk.": "pack"
+      },
+      "dimensions": [
+        "x",
+        "in",
+        "inch",
+        "inches",
+        "ft",
+        "feet",
+        "cm",
+        "mm"
+      ]
+    },
+    "do_not_destroy": [
+      "shade numbers such as 096",
+      "strengths such as 500 mg",
+      "model identifiers",
+      "dimensions such as 5x7",
+      "pack counts",
+      "percentages such as 2%",
+      "light-bulb/electrical codes such as A19"
+    ]
+  },
+  "derived_fields": [
+    {
+      "name": "title_norm",
+      "source": [
+        "name"
+      ],
+      "description": "Normalized full title with informative numbers preserved."
+    },
+    {
+      "name": "brand_norm",
+      "source": [
+        "brand_raw",
+        "name"
+      ],
+      "description": "Normalized observed brand. Name-based inference is allowed only as a retrieval hint, never as truth."
+    },
+    {
+      "name": "taxonomy_path",
+      "source": [
+        "item_info"
+      ],
+      "description": "category_0..category_3 parsed from JSON."
+    },
+    {
+      "name": "size_signature",
+      "source": [
+        "sizing_comp",
+        "name"
+      ],
+      "description": "Normalized quantity/unit/count/dimensions. Name extraction fills missing structured size."
+    },
+    {
+      "name": "numeric_signature",
+      "source": [
+        "name",
+        "sizing_comp",
+        "description"
+      ],
+      "description": "Numbers tied to units, percentages, dimensions, strengths, shade/model/spec codes."
+    },
+    {
+      "name": "core_product_tokens",
+      "source": [
+        "name",
+        "brand_raw"
+      ],
+      "description": "Title tokens after removing brand, size/count tokens, and low-information marketing language."
+    },
+    {
+      "name": "modifier_tokens",
+      "source": [
+        "name",
+        "description",
+        "item_info"
+      ],
+      "description": "Flavor, form, state, scent, color/shade, diet, material, life-stage and similar variant terms."
+    },
+    {
+      "name": "rare_tokens",
+      "source": [
+        "name"
+      ],
+      "description": "High-IDF B-corpus tokens retained for discriminative retrieval."
+    },
+    {
+      "name": "full_sparse_text",
+      "source": [
+        "name",
+        "brand_raw",
+        "item_info",
+        "sizing_comp",
+        "description",
+        "tags"
+      ],
+      "description": "Weighted multi-field sparse retrieval document."
+    }
+  ],
+  "indexing_strategy": {
+    "store_b_is_indexed_once": true,
+    "sparse_indexes": [
+      "word TF-IDF title index",
+      "character TF-IDF title index",
+      "core-product TF-IDF index",
+      "weighted multi-field TF-IDF index"
+    ],
+    "inverted_indexes": [
+      "exact normalized title",
+      "brand token",
+      "rare token",
+      "numeric/spec token",
+      "normalized size signature",
+      "modifier token",
+      "taxonomy token"
+    ],
+    "implementation_note": "Use sparse top-K similarity, not a dense A×B similarity matrix. Process A in batches and keep only per-query top-K results."
+  },
+  "channels": [
+    {
+      "id": "R01",
+      "name": "exact_normalized_title",
+      "cost_tier": 1,
+      "goal": "Catch same-product listings whose titles normalize identically.",
+      "query_fields": [
+        "title_norm"
+      ],
+      "index": "exact normalized title inverted map",
+      "method": "exact lookup",
+      "top_k": 20,
+      "activation": "always",
+      "hard_filter": false,
+      "protected_candidate_rule": "retain every exact-title hit through fusion",
+      "why_separate": "Provides a near-free high-signal route without making an automatic match decision."
+    },
+    {
+      "id": "R02",
+      "name": "word_tfidf_title",
+      "cost_tier": 1,
+      "goal": "Retrieve products sharing important words and short phrases.",
+      "query_fields": [
+        "title_norm"
+      ],
+      "index": "TF-IDF word n-grams",
+      "parameters_initial": {
+        "ngram_range": [
+          1,
+          2
+        ],
+        "sublinear_tf": true,
+        "norm": "l2",
+        "min_df": 2,
+        "max_df": 0.995
+      },
+      "similarity": "cosine",
+      "top_k": 25,
+      "activation": "always",
+      "hard_filter": false
+    },
+    {
+      "id": "R03",
+      "name": "character_ngram_title",
+      "cost_tier": 2,
+      "goal": "Survive spelling, punctuation, tokenization, pluralization, and formatting differences.",
+      "query_fields": [
+        "title_norm"
+      ],
+      "index": "TF-IDF char_wb n-grams",
+      "parameters_initial": {
+        "analyzer": "char_wb",
+        "ngram_range": [
+          3,
+          5
+        ],
+        "sublinear_tf": true,
+        "norm": "l2",
+        "min_df": 2
+      },
+      "similarity": "cosine",
+      "top_k": 25,
+      "activation": "always",
+      "hard_filter": false
+    },
+    {
+      "id": "R04",
+      "name": "core_product_lexical",
+      "cost_tier": 1,
+      "goal": "Emphasize what the product is after stripping brand, quantity, and marketing noise.",
+      "query_fields": [
+        "core_product_tokens"
+      ],
+      "index": "TF-IDF core-product index",
+      "parameters_initial": {
+        "ngram_range": [
+          1,
+          2
+        ],
+        "sublinear_tf": true
+      },
+      "similarity": "cosine",
+      "top_k": 20,
+      "activation": "when >=1 core product token exists",
+      "hard_filter": false
+    },
+    {
+      "id": "R05",
+      "name": "brand_augmented_lexical",
+      "cost_tier": 1,
+      "goal": "Improve national-brand exact-product retrieval without excluding private-label equivalents.",
+      "query_fields": [
+        "brand_norm",
+        "core_product_tokens",
+        "title_norm"
+      ],
+      "method": "lexical score plus soft brand bonus",
+      "top_k": 15,
+      "activation": "when brand is observed or confidently inferable",
+      "hard_filter": false,
+      "forbidden_behavior": "Never require same brand.",
+      "initial_score_logic": "base_lexical + 0.15 * brand_agreement_hint"
+    },
+    {
+      "id": "R06",
+      "name": "taxonomy_augmented",
+      "cost_tier": 1,
+      "goal": "Use product-family context to rescue ambiguous generic titles.",
+      "query_fields": [
+        "core_product_tokens",
+        "taxonomy_path"
+      ],
+      "method": "lexical retrieval with soft taxonomy-token boost",
+      "top_k": 15,
+      "activation": "when item_info taxonomy exists",
+      "hard_filter": false,
+      "forbidden_behavior": "Never require Store A and Store B category strings to match.",
+      "reason": "Observed taxonomies are structurally different and A contains noisy seasonal paths."
+    },
+    {
+      "id": "R07",
+      "name": "quantity_pack_aware",
+      "cost_tier": 1,
+      "goal": "Prefer same product with compatible quantity, pack count, or dimensions while retaining size-mismatch candidates.",
+      "query_fields": [
+        "core_product_tokens",
+        "size_signature"
+      ],
+      "method": "core lexical score plus soft normalized-size bonus",
+      "top_k": 15,
+      "activation": "when any size/count/dimension evidence exists",
+      "hard_filter": false,
+      "initial_score_logic": "base_core + 0.20 * compatible_size_hint",
+      "forbidden_behavior": "Never exclude because one side has missing or conflicting size."
+    },
+    {
+      "id": "R08",
+      "name": "numeric_spec_code",
+      "cost_tier": 1,
+      "goal": "Retrieve products distinguished by strengths, dimensions, shade numbers, model/spec codes, percentages, or pack counts.",
+      "query_fields": [
+        "numeric_signature",
+        "core_product_tokens"
+      ],
+      "method": "inverted lookup + IDF-weighted numeric/spec overlap + lexical tie-break",
+      "top_k": 20,
+      "activation": "when informative numeric/spec tokens exist",
+      "hard_filter": false,
+      "protected_candidate_rule": "Protect exact matches on strong alphanumeric/model/spec tokens; ordinary quantities such as 12 oz are not protected by themselves."
+    },
+    {
+      "id": "R09",
+      "name": "rare_token_signature",
+      "cost_tier": 1,
+      "goal": "Exploit uncommon product words that are highly discriminative.",
+      "query_fields": [
+        "rare_tokens"
+      ],
+      "method": "B-corpus inverted index ranked by sum(IDF(shared_rare_token))",
+      "parameters_initial": {
+        "rare_token_max_document_frequency_fraction": 0.002,
+        "minimum_token_length": 3
+      },
+      "top_k": 20,
+      "activation": "when >=1 rare token exists",
+      "hard_filter": false,
+      "protected_candidate_rule": "Protect candidates sharing >=2 independently rare tokens."
+    },
+    {
+      "id": "R10",
+      "name": "variant_form_state",
+      "cost_tier": 1,
+      "goal": "Retrieve the correct flavor/form/state/style variant when generic product terms are common.",
+      "query_fields": [
+        "core_product_tokens",
+        "modifier_tokens"
+      ],
+      "method": "lexical retrieval with modifier overlap bonus",
+      "top_k": 15,
+      "activation": "when modifier tokens exist",
+      "hard_filter": false,
+      "initial_score_logic": "base_core + 0.20 * modifier_overlap",
+      "forbidden_behavior": "Do not exclude candidates with missing/different modifiers; contradiction belongs downstream."
+    },
+    {
+      "id": "R11",
+      "name": "weighted_multifield_sparse",
+      "cost_tier": 2,
+      "goal": "Use all available evidence while preventing B's rich descriptions from overpowering A's sparse records.",
+      "query_fields": [
+        "name",
+        "brand_raw",
+        "item_info",
+        "sizing_comp",
+        "description",
+        "tags"
+      ],
+      "method": "field-specific sparse cosine scores combined by weighted sum",
+      "field_weights_initial": {
+        "name": 1.0,
+        "core_product": 1.0,
+        "brand": 0.35,
+        "size_signature": 0.35,
+        "taxonomy": 0.2,
+        "description": 0.1,
+        "tags": 0.05
+      },
+      "top_k": 25,
+      "activation": "always",
+      "hard_filter": false,
+      "note": "Weights are deliberately conservative for description/tags because A coverage is weak."
+    },
+    {
+      "id": "R12",
+      "name": "gpt5_nano_canonical_rescue",
+      "cost_tier": 3,
+      "goal": "Recover candidates for noisy, underspecified, or cross-wording products that sparse channels do not agree on.",
+      "model": "BetterBasket-provided GPT-5 nano deployment",
+      "activation": {
+        "conditional_only": true,
+        "trigger_if_any": [
+          "fewer than 12 unique candidates from R01-R11",
+          "no candidate appears in at least 2 independent channels",
+          "top fused candidate score is below the calibrated retrieval floor",
+          "title appears heavily marketing-dominated or structurally ambiguous"
+        ]
+      },
+      "llm_task": {
+        "input": [
+          "name",
+          "brand_raw",
+          "item_info",
+          "sizing_comp",
+          "description_if_available"
+        ],
+        "output_schema": {
+          "canonical_product_type": "string",
+          "brand_hint": "string|null",
+          "variant_terms": [
+            "string"
+          ],
+          "form_state_terms": [
+            "string"
+          ],
+          "quantity_terms": [
+            "string"
+          ],
+          "critical_spec_terms": [
+            "string"
+          ],
+          "alternate_search_queries": [
+            "string"
+          ]
+        },
+        "instruction_boundary": "GPT only rewrites/extracts retrieval queries. It does not decide MATCH/NON_MATCH and does not inspect the whole B dataset."
+      },
+      "search_method_after_llm": "run generated canonical queries through R02/R04/R08/R09/R10 indexes",
+      "top_k": 20,
+      "hard_filter": false,
+      "cache_by_item_id": true
+    }
+  ],
+  "fusion_and_deduplication": {
+    "step_1": "Run R01-R11 and union candidate item_id_B values.",
+    "step_2": "Deduplicate by item_id_B while preserving each channel rank and raw score.",
+    "step_3": "Fuse ranks using weighted Reciprocal Rank Fusion (RRF).",
+    "rrf_formula": "sum_channel(weight[channel] / (rrf_k + rank[channel]))",
+    "rrf_k_initial": 60,
+    "channel_weights_initial": {
+      "R01": 2.5,
+      "R02": 1.2,
+      "R03": 1.1,
+      "R04": 1.4,
+      "R05": 0.8,
+      "R06": 0.6,
+      "R07": 0.9,
+      "R08": 1.5,
+      "R09": 1.4,
+      "R10": 0.9,
+      "R11": 1.2,
+      "R12": 1.0
+    },
+    "step_4": "Evaluate R12 only when its rescue triggers fire; merge its candidates and recompute fusion.",
+    "step_5": "Retain top 60 fused candidates plus protected candidates.",
+    "candidate_cap": {
+      "normal": 60,
+      "absolute_with_protected_candidates": 75
+    },
+    "important": "Fusion weights are initialization values, not final learned/calibrated constants."
+  },
+  "candidate_record_output_schema": {
+    "item_id_A": "string",
+    "item_id_B": "string",
+    "retrieval_rank": "integer",
+    "retrieval_fusion_score": "float",
+    "channels_hit": [
+      "R02",
+      "R04"
+    ],
+    "channel_ranks": {
+      "R02": 3,
+      "R04": 1
+    },
+    "channel_scores": {
+      "R02": 0.71,
+      "R04": 0.83
+    },
+    "protected_candidate": "boolean",
+    "retrieval_reasons": [
+      "shared rare token",
+      "same normalized quantity"
+    ],
+    "retrieval_only": true
+  },
+  "non_goals_and_forbidden_rules": [
+    "Candidate retrieval never outputs MATCH or NON_MATCH.",
+    "No same-brand requirement.",
+    "No exact-category requirement.",
+    "No exact-size requirement.",
+    "No flavor/form/state hard rejection.",
+    "Missing data is never treated as disagreement.",
+    "A candidate can survive because one strong independent channel found it.",
+    "Do not use GPT confidence as candidate truth."
+  ],
+  "evaluation_protocol": {
+    "gold_set_requirement": "Create a human-verified positive correspondence set before tuning. Use development/calibration/final-holdout splits.",
+    "primary_metrics": [
+      "Recall@1",
+      "Recall@5",
+      "Recall@10",
+      "Recall@25",
+      "Recall@50",
+      "Pair Completeness",
+      "Candidates per A product",
+      "Reduction Ratio",
+      "Runtime per 1,000 A products"
+    ],
+    "minimum_target_before_match_engine": {
+      "Recall@10": 0.97,
+      "Recall@25": 0.99,
+      "Recall@50": 0.995
+    },
+    "stress_slices": [
+      "national-brand same SKU",
+      "private-label equivalent",
+      "missing A brand",
+      "missing A size",
+      "same words but different variant",
+      "numeric/model-heavy products",
+      "non-food departments",
+      "fresh/loose/variable-weight",
+      "noisy seasonal taxonomy",
+      "very short generic names"
+    ],
+    "ablation_tests": "Remove one channel at a time and measure lost positive correspondences. A channel stays only if it improves recall, robustness, or efficiency on a defined slice.",
+    "no_test_leakage": "Final holdout labels must not be used to tune channel weights, top_k, thresholds, or rescue triggers."
+  },
+  "efficiency_budget": {
+    "full_pairs_without_retrieval": 12946275684,
+    "pairs_at_60_candidates_per_A": 13991940,
+    "comparison_reduction_percent_at_60": 99.8919,
+    "principle": "Spend cheap sparse/inverted-index work to protect recall; reserve GPT and 140-attribute adjudication for the small candidate set."
+  },
+  "planned_tuning_order": [
+    "Validate normalization and parsers.",
+    "Build R01/R02/R03/R04/R08/R09 first.",
+    "Construct initial human-verified positive set.",
+    "Measure Recall@K.",
+    "Add R05/R06/R07/R10/R11 and run ablations.",
+    "Enable R12 only for observed failure modes.",
+    "Tune per-channel top_k and fusion weights on development/calibration data.",
+    "Freeze retrieval specification.",
+    "Evaluate once on untouched final holdout.",
+    "Only then feed candidates into Match Engine."
+  ],
+  "research_basis": [
+    {
+      "title": "Pre-trained Language Models for Entity Blocking",
+      "source": "NAACL 2024",
+      "url": "https://aclanthology.org/2024.naacl-long.483/",
+      "relevance": "Separates candidate blocking from downstream entity matching."
+    },
+    {
+      "title": "How to reduce the search space of Entity Resolution: with Blocking or Nearest Neighbor search?",
+      "source": "Papadakis et al.",
+      "url": "https://arxiv.org/abs/2202.12521",
+      "relevance": "Compares blocking, string-similarity joins, and nearest-neighbor filtering with recall/efficiency tradeoffs."
+    },
+    {
+      "title": "SC-Block: Supervised Contrastive Blocking within Entity Resolution Pipelines",
+      "source": "Brinkmann, Shraga, Bizer",
+      "url": "https://arxiv.org/abs/2303.03132",
+      "relevance": "Uses 99.5% pair completeness as a high-recall blocking operating point."
+    },
+    {
+      "title": "TfidfVectorizer documentation",
+      "source": "scikit-learn",
+      "url": "https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html",
+      "relevance": "Supports word and character n-gram sparse representations."
+    },
+    {
+      "title": "Reciprocal rank fusion outperforms Condorcet and individual rank learning methods",
+      "source": "Cormack, Clarke, Buettcher, SIGIR 2009",
+      "url": "https://dl.acm.org/doi/10.1145/1571941.1572114",
+      "relevance": "Basis for combining independent retrieval rankings without requiring identical score scales."
+    }
+  ]
+}

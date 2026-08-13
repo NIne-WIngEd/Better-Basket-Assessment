@@ -1,0 +1,622 @@
+{
+  "version": "audited_v17_final_submission_count_uniqueness_guard",
+  "artifact_role": "derived_documentation_view",
+  "runtime_source_of_truth": [
+    "betterbasket_non_match_algorithm.py",
+    "betterbasket_product_evidence.py",
+    "betterbasket_final_certification.py"
+  ],
+  "purpose": "Machine-readable view of the final runtime hard-veto mapping. This file is explanatory and is not loaded by the matcher.",
+  "important_note": "The audited criteria constitution originally contained V001-V064. The implementation evolved afterward: V065-V067 were added, while some original IDs such as V064 candidate_nonuniqueness are now enforced by routing/final-certification logic rather than the generic Non-match hard-veto path.",
+  "generic_activation": {
+    "fact_quality_min": 0.84,
+    "conflict_severity_min": 0.55,
+    "brand_rule": "Brand mismatch hard-vetoes only when both sides are national/manufacturer brands. Private-label to private-label remains legal.",
+    "dietary_status_rule": "Diet/status contradictions may contribute Non-match evidence without automatically hard-vetoing.",
+    "broad_identity_rule": "Several broad identity fields are context-gated rather than blindly hard-vetoed by the generic function."
+  },
+  "attribute_to_veto_id": {
+    "canonical_category": "V001",
+    "brand": "V002",
+    "functional_name": "V004",
+    "product_family": "V005",
+    "model_or_part_identifier": "V006",
+    "variant_name": "V007",
+    "normalized_total_quantity": "V008",
+    "declared_count": "V008",
+    "pack_structure": "V009",
+    "refill_vs_starter_kit": "V010",
+    "storage_state": "V011",
+    "physical_state": "V012",
+    "flavor": "V013",
+    "scent": "V013",
+    "protein_source": "V066",
+    "produce_species": "V015",
+    "produce_form": "V016",
+    "meat_species": "V017",
+    "meat_cut": "V017",
+    "grind_type": "V018",
+    "bone_state": "V018",
+    "skin_state": "V018",
+    "ground_meat_lean_fat_ratio": "V019",
+    "seafood_species": "V020",
+    "egg_size_grade": "V021",
+    "egg_production_method": "V022",
+    "beverage_type": "V023",
+    "water_source_treatment_type": "V024",
+    "carbonation_status": "V025",
+    "caffeine_status": "V026",
+    "juice_percentage": "V027",
+    "milk_type": "V028",
+    "fat_level": "V028",
+    "cheese_type": "V029",
+    "alcohol_class": "V030",
+    "wine_varietal": "V031",
+    "alcohol_strength_abv": "V032",
+    "vintage": "V033",
+    "origin_region_appellation": "V033",
+    "active_ingredient": "V034",
+    "active_strength": "V035",
+    "dosage_form": "V036",
+    "coffee_format": "V067",
+    "route_of_administration": "V037",
+    "release_type": "V038",
+    "spf": "V039",
+    "shade": "V040",
+    "finish": "V041",
+    "hair_type": "V042",
+    "skin_type": "V042",
+    "absorbency": "V043",
+    "bristle_firmness": "V044",
+    "baby_stage": "V045",
+    "formula_base": "V046",
+    "diaper_size": "V047",
+    "pet_species": "V048",
+    "pet_life_stage": "V049",
+    "pet_litter_clumping_status": "V050",
+    "footwear_size_compatibility": "V051",
+    "paper_ply": "V052",
+    "rated_use_count": "V053",
+    "dimension_signature": "V054",
+    "electrical_voltage": "V055",
+    "light_bulb_base": "V056",
+    "light_bulb_shape": "V057",
+    "light_output_lumens": "V058",
+    "light_color_temperature": "V058",
+    "light_watt_equivalent": "V058",
+    "connector_type": "V059",
+    "battery_spec": "V060",
+    "storage_capacity": "V061",
+    "theme_or_franchise": "V062",
+    "occasion_or_holiday": "V063"
+  },
+  "special_runtime_rules": [
+    {
+      "id": "V065",
+      "name": "washable_waterproof_variant_conflict",
+      "implementation": "cross-field explicit washable vs waterproof contradiction"
+    },
+    {
+      "id": "V009",
+      "name": "cross_pack_count_conflict",
+      "implementation": "cross-field pack_structure versus declared_count mismatch when both explicit counts exceed 1"
+    }
+  ],
+  "runtime_veto_ids": [
+    "V001",
+    "V002",
+    "V004",
+    "V005",
+    "V006",
+    "V007",
+    "V008",
+    "V009",
+    "V010",
+    "V011",
+    "V012",
+    "V013",
+    "V015",
+    "V016",
+    "V017",
+    "V018",
+    "V019",
+    "V020",
+    "V021",
+    "V022",
+    "V023",
+    "V024",
+    "V025",
+    "V026",
+    "V027",
+    "V028",
+    "V029",
+    "V030",
+    "V031",
+    "V032",
+    "V033",
+    "V034",
+    "V035",
+    "V036",
+    "V037",
+    "V038",
+    "V039",
+    "V040",
+    "V041",
+    "V042",
+    "V043",
+    "V044",
+    "V045",
+    "V046",
+    "V047",
+    "V048",
+    "V049",
+    "V050",
+    "V051",
+    "V052",
+    "V053",
+    "V054",
+    "V055",
+    "V056",
+    "V057",
+    "V058",
+    "V059",
+    "V060",
+    "V061",
+    "V062",
+    "V063",
+    "V065",
+    "V066",
+    "V067"
+  ],
+  "runtime_veto_id_count": 64,
+  "rule_reference": [
+    {
+      "id": "V001",
+      "name": "canonical_category_conflict",
+      "rule": "Confident canonical product classes are incompatible.",
+      "scope": "all",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V002",
+      "name": "national_brand_conflict",
+      "rule": "Both sides are national brands and normalized primary brands differ without an approved alias/rebrand relation.",
+      "scope": "national branded",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V004",
+      "name": "functional_name_conflict",
+      "rule": "Functional product identities are materially different.",
+      "scope": "all",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V005",
+      "name": "product_family_conflict",
+      "rule": "Consumer product families are incompatible.",
+      "scope": "all",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V006",
+      "name": "model_part_conflict",
+      "rule": "Both sides expose reliable model/part identifiers and they differ.",
+      "scope": "durable/tech",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V007",
+      "name": "variant_conflict",
+      "rule": "Mutually exclusive named variants differ.",
+      "scope": "variant-bearing",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V008",
+      "name": "fixed_net_content_conflict",
+      "rule": "Normalized declared net content differs beyond unit conversion/rounding equivalence.",
+      "scope": "fixed packaged",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V009",
+      "name": "pack_structure_conflict",
+      "rule": "Single/multipack or nested pack structure materially differs.",
+      "scope": "packaged",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V010",
+      "name": "bundle_refill_conflict",
+      "rule": "Bundle/starter kit/refill/standalone roles differ.",
+      "scope": "kits/refills",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V011",
+      "name": "storage_state_conflict",
+      "rule": "Fresh/frozen/refrigerated/shelf-stable state differs when material.",
+      "scope": "food/fresh",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V012",
+      "name": "physical_form_conflict",
+      "rule": "Liquid/powder/gel/tablet/aerosol/etc. differs when form defines use.",
+      "scope": "form-sensitive",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V013",
+      "name": "flavor_scent_variant_conflict",
+      "rule": "Explicit flavor or scent variants are incompatible.",
+      "scope": "variant-bearing",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V015",
+      "name": "produce_species_conflict",
+      "rule": "Produce species differs.",
+      "scope": "produce",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V016",
+      "name": "produce_form_conflict",
+      "rule": "Whole/sliced/diced/etc. materially differs.",
+      "scope": "produce",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V017",
+      "name": "meat_species_cut_conflict",
+      "rule": "Meat species or primary cut differs.",
+      "scope": "meat",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V018",
+      "name": "meat_bone_skin_grind_conflict",
+      "rule": "Bone/skin/grind states differ.",
+      "scope": "meat",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V019",
+      "name": "ground_meat_ratio_conflict",
+      "rule": "Explicit lean/fat ratios differ.",
+      "scope": "ground meat",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V020",
+      "name": "seafood_species_conflict",
+      "rule": "Seafood species differs.",
+      "scope": "seafood",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V021",
+      "name": "egg_size_grade_conflict",
+      "rule": "Explicit shell-egg size or grade differs.",
+      "scope": "shell eggs",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V022",
+      "name": "egg_production_conflict",
+      "rule": "Explicit cage-free/free-range/pasture-raised method differs when marketed as variant.",
+      "scope": "shell eggs",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V023",
+      "name": "beverage_type_conflict",
+      "rule": "Material beverage class/type differs.",
+      "scope": "beverage",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V024",
+      "name": "water_type_conflict",
+      "rule": "Spring/purified/distilled/mineral/alkaline water type differs.",
+      "scope": "water",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V025",
+      "name": "carbonation_conflict",
+      "rule": "Still vs sparkling/carbonated differs.",
+      "scope": "beverage",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V026",
+      "name": "caffeine_conflict",
+      "rule": "Caffeinated vs decaf/caffeine-free differs.",
+      "scope": "coffee/tea/beverage",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V027",
+      "name": "juice_percentage_conflict",
+      "rule": "100% juice vs drink/cocktail or materially different declared juice percentage.",
+      "scope": "juice",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V028",
+      "name": "milk_type_fat_conflict",
+      "rule": "Milk type/fat level differs.",
+      "scope": "dairy",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V029",
+      "name": "cheese_type_conflict",
+      "rule": "Cheese type/style materially differs.",
+      "scope": "cheese",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V030",
+      "name": "alcohol_class_conflict",
+      "rule": "Beer/wine/spirit class differs.",
+      "scope": "alcohol",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V031",
+      "name": "wine_varietal_conflict",
+      "rule": "Explicit wine varietals differ.",
+      "scope": "wine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V032",
+      "name": "alcohol_strength_conflict",
+      "rule": "Normalized ABV materially differs for otherwise same alcohol product.",
+      "scope": "alcohol",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V033",
+      "name": "vintage_appellation_conflict",
+      "rule": "Vintage/appellation differs when declared and identity-bearing.",
+      "scope": "wine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V034",
+      "name": "active_ingredient_conflict",
+      "rule": "Drug active ingredient signature differs.",
+      "scope": "medicine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V035",
+      "name": "active_strength_conflict",
+      "rule": "Drug strength differs after normalization.",
+      "scope": "medicine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V036",
+      "name": "dosage_form_conflict",
+      "rule": "Dosage form differs.",
+      "scope": "medicine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V037",
+      "name": "route_conflict",
+      "rule": "Route of administration differs.",
+      "scope": "medicine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V038",
+      "name": "release_type_conflict",
+      "rule": "Immediate/extended/delayed release differs.",
+      "scope": "medicine",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V039",
+      "name": "spf_conflict",
+      "rule": "SPF differs when defining sunscreen/cosmetic variant.",
+      "scope": "sun care",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V040",
+      "name": "cosmetic_shade_conflict",
+      "rule": "Explicit cosmetic shade differs.",
+      "scope": "cosmetics",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V041",
+      "name": "cosmetic_finish_conflict",
+      "rule": "Finish differs when named variant.",
+      "scope": "cosmetics",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V042",
+      "name": "hair_skin_target_conflict",
+      "rule": "Explicit target hair/skin type differs when defining variant.",
+      "scope": "personal care",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V043",
+      "name": "absorbency_conflict",
+      "rule": "Explicit absorbency level differs.",
+      "scope": "diapers/feminine/incontinence",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V044",
+      "name": "bristle_firmness_conflict",
+      "rule": "Explicit toothbrush/brush-head firmness differs.",
+      "scope": "oral care",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V045",
+      "name": "baby_stage_conflict",
+      "rule": "Baby age/stage differs.",
+      "scope": "baby",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V046",
+      "name": "formula_base_conflict",
+      "rule": "Baby formula base/type differs.",
+      "scope": "baby formula",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V047",
+      "name": "diaper_size_conflict",
+      "rule": "Diaper/training pant size differs.",
+      "scope": "baby",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V048",
+      "name": "pet_species_conflict",
+      "rule": "Pet species differs.",
+      "scope": "pet",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V049",
+      "name": "pet_life_stage_conflict",
+      "rule": "Pet life stage differs.",
+      "scope": "pet",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V050",
+      "name": "pet_litter_clumping_conflict",
+      "rule": "Clumping vs non-clumping differs.",
+      "scope": "cat litter",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V051",
+      "name": "footwear_size_compatibility_conflict",
+      "rule": "Orthotic/insole shoe-size compatibility differs.",
+      "scope": "foot care",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V052",
+      "name": "paper_ply_conflict",
+      "rule": "Explicit ply count differs for comparable paper goods.",
+      "scope": "paper goods",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V053",
+      "name": "rated_use_count_conflict",
+      "rule": "Declared loads/washes/uses differ when that count defines the marketed SKU.",
+      "scope": "detergent/use-count goods",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V054",
+      "name": "dimension_conflict",
+      "rule": "Declared product dimensions differ where dimensions define the consumer variant.",
+      "scope": "home/kitchen/durable",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V055",
+      "name": "electrical_voltage_conflict",
+      "rule": "Required voltage differs.",
+      "scope": "household tech",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V056",
+      "name": "light_bulb_base_conflict",
+      "rule": "Bulb base/socket differs.",
+      "scope": "light bulbs",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V057",
+      "name": "light_bulb_shape_conflict",
+      "rule": "Bulb shape code differs.",
+      "scope": "light bulbs",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V058",
+      "name": "light_bulb_output_conflict",
+      "rule": "Lumens/color temperature/watt-equivalent conflict materially.",
+      "scope": "light bulbs",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V059",
+      "name": "connector_conflict",
+      "rule": "Connector type differs.",
+      "scope": "tech accessories",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V060",
+      "name": "battery_spec_conflict",
+      "rule": "Battery size/code/chemistry/rechargeability differs.",
+      "scope": "batteries",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V061",
+      "name": "storage_capacity_conflict",
+      "rule": "Explicit storage capacity differs.",
+      "scope": "storage media",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V062",
+      "name": "theme_franchise_conflict",
+      "rule": "Explicit franchise/theme differs when it defines the item.",
+      "scope": "party/gift",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V063",
+      "name": "occasion_conflict",
+      "rule": "Explicit holiday/occasion differs when it defines the item.",
+      "scope": "seasonal/party",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V065",
+      "name": "washable_waterproof_variant_conflict",
+      "rule": "Explicit washable versus waterproof conflict when it defines the eye-makeup/mascara variant.",
+      "scope": "beauty/personal care",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V066",
+      "name": "protein_source_conflict",
+      "rule": "Explicit incompatible protein sources or animal-vs-plant formulation in a protein-centric product are incompatible.",
+      "scope": "protein-centric food/beverage",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    },
+    {
+      "id": "V067",
+      "name": "coffee_format_conflict",
+      "rule": "Explicit incompatible coffee delivery formats such as ground/whole-bean/instant versus pods or capsules are not the same SKU.",
+      "scope": "coffee",
+      "runtime_status": "mapped_or_conditionally_applicable"
+    }
+  ]
+}

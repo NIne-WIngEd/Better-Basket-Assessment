@@ -1,0 +1,637 @@
+Configuration:
+  A: C:\Users\rayns\Downloads\grocery_store_a_items_final.csv
+  B: C:\Users\rayns\Downloads\grocery_store_b_items_final.csv
+  Worker chunk: 2,500 A products
+  Deterministic concurrency: 4
+  Retrieval: compact rare-token/spec index top 20
+  Full scoring: top 3 + exact-title protected (cap 5)
+  GPT review: up to 12000 unresolved products; 24/request; reasoning=low + structured output
+  GPT: ON
+  Output: C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY
+Start full-dataset pipeline? [Y/n]: y
+
+========== BUILD STORE-B COMPACT INDEX ==========
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --build-index --b C:\Users\rayns\Downloads\grocery_store_b_items_final.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite
+[index] 55,516 B products -> compact inverted index + SQLite detail store + lazy fact cache
+[stage] 8.2s
+
+========== PASS 1: DETERMINISTIC MATCH/NON-MATCH ==========
+[det] 233,199 A rows | adaptive worker concurrency up to 4 | compact inverted retrieval
+
+--- worker 0 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000000.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000000.csv --queue ...
+
+--- worker 1 | 2,500 A products ---
+
+--- worker 2 | 2,500 A products ---[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000001.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000001.csv --queue ...
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000002.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000002.csv --queue ...
+
+--- worker 3 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000003.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000003.csv --queue ...
+[worker] {'NON_MATCH': 2405, 'MATCH': 21, 'REVIEW': 74} | deep 325/2,500 | 4.3s
+[stage] 4.7s
+[worker] {'NON_MATCH': 2424, 'REVIEW': 65, 'MATCH': 11} | deep 327/2,500 | 4.3s
+[det 1] {'NON_MATCH': 2405, 'MATCH': 21, 'REVIEW': 74} | GPT queue 71
+[stage] 4.8s
+[det 2] {'NON_MATCH': 2424, 'REVIEW': 65, 'MATCH': 11} | GPT queue 57
+[worker] {'NON_MATCH': 2400, 'REVIEW': 79, 'MATCH': 21} | deep 456/2,500 | 5.4s
+[stage] 5.9s
+[det 0] {'NON_MATCH': 2400, 'REVIEW': 79, 'MATCH': 21} | GPT queue 68
+[worker] {'NON_MATCH': 2241, 'REVIEW': 188, 'MATCH': 71} | deep 802/2,500 | 7.1s
+[stage] 7.6s
+[det 3] {'NON_MATCH': 2241, 'REVIEW': 188, 'MATCH': 71} | GPT queue 165
+
+--- worker 4 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000004.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000004.csv --queue ...
+
+--- worker 5 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000005.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000005.csv --queue ...
+
+--- worker 6 | 2,500 A products ---
+--- worker 7 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000006.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000006.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000007.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000007.csv --queue ...
+[worker] {'NON_MATCH': 2421, 'REVIEW': 65, 'MATCH': 14} | deep 288/2,500 | 5.7s
+[stage] 6.4s
+[det 7] {'NON_MATCH': 2421, 'REVIEW': 65, 'MATCH': 14} | GPT queue 58
+[worker] {'NON_MATCH': 2378, 'REVIEW': 99, 'MATCH': 23} | deep 419/2,500 | 6.5s
+[stage] 7.2s
+[det 5] {'NON_MATCH': 2378, 'REVIEW': 99, 'MATCH': 23} | GPT queue 88
+[worker] {'NON_MATCH': 2378, 'MATCH': 30, 'REVIEW': 92} | deep 537/2,500 | 7.9s
+[stage] 8.5s
+[det 6] {'NON_MATCH': 2378, 'MATCH': 30, 'REVIEW': 92} | GPT queue 76
+[worker] {'NON_MATCH': 2225, 'REVIEW': 197, 'MATCH': 78} | deep 851/2,500 | 9.9s
+[stage] 10.5s
+[det 4] {'NON_MATCH': 2225, 'REVIEW': 197, 'MATCH': 78} | GPT queue 176
+
+--- worker 8 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000008.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000008.csv --queue ...
+
+--- worker 9 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000009.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000009.csv --queue ...
+
+--- worker 10 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000010.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000010.csv --queue ...
+
+--- worker 11 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000011.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000011.csv --queue ...
+[worker] {'NON_MATCH': 2425, 'MATCH': 27, 'REVIEW': 48} | deep 446/2,500 | 6.7s
+[stage] 7.4s
+[det 8] {'NON_MATCH': 2425, 'MATCH': 27, 'REVIEW': 48} | GPT queue 45
+[worker] {'NON_MATCH': 2370, 'REVIEW': 95, 'MATCH': 35} | deep 500/2,500 | 7.1s
+[stage] 7.7s
+[det 11] {'NON_MATCH': 2370, 'REVIEW': 95, 'MATCH': 35} | GPT queue 70
+[worker] {'REVIEW': 140, 'NON_MATCH': 2302, 'MATCH': 58} | deep 698/2,500 | 8.4s
+[stage] 9.1s
+[det 10] {'REVIEW': 140, 'NON_MATCH': 2302, 'MATCH': 58} | GPT queue 120
+[worker] {'NON_MATCH': 2240, 'REVIEW': 182, 'MATCH': 78} | deep 834/2,500 | 9.4s
+[stage] 10.0s
+[det 9] {'NON_MATCH': 2240, 'REVIEW': 182, 'MATCH': 78} | GPT queue 157
+
+--- worker 12 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000012.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000012.csv --queue ...
+
+--- worker 13 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000013.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000013.csv --queue ...
+
+--- worker 14 | 2,500 A products ---
+
+--- worker 15 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000014.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000014.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000015.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000015.csv --queue ...
+[worker] {'NON_MATCH': 2326, 'REVIEW': 140, 'MATCH': 34} | deep 661/2,500 | 7.9s
+[stage] 8.6s
+[det 13] {'NON_MATCH': 2326, 'REVIEW': 140, 'MATCH': 34} | GPT queue 128
+[worker] {'NON_MATCH': 2299, 'REVIEW': 159, 'MATCH': 42} | deep 793/2,500 | 8.6s
+[stage] 9.3s
+[det 12] {'NON_MATCH': 2299, 'REVIEW': 159, 'MATCH': 42} | GPT queue 140
+[worker] {'NON_MATCH': 2262, 'REVIEW': 176, 'MATCH': 62} | deep 870/2,500 | 8.9s
+[stage] 9.6s
+[det 15] {'NON_MATCH': 2262, 'REVIEW': 176, 'MATCH': 62} | GPT queue 158
+[worker] {'NON_MATCH': 2267, 'REVIEW': 170, 'MATCH': 63} | deep 938/2,500 | 9.4s
+[stage] 10.1s
+[det 14] {'NON_MATCH': 2267, 'REVIEW': 170, 'MATCH': 63} | GPT queue 129
+
+--- worker 16 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000016.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000016.csv --queue ...
+
+--- worker 17 | 2,500 A products ---
+
+--- worker 18 | 2,500 A products ---[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000017.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000017.csv --queue ...
+
+--- worker 19 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000018.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000018.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000019.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000019.csv --queue ...
+[worker] {'NON_MATCH': 2364, 'REVIEW': 101, 'MATCH': 35} | deep 650/2,500 | 7.0s
+[stage] 7.6s
+[det 19] {'NON_MATCH': 2364, 'REVIEW': 101, 'MATCH': 35} | GPT queue 89
+[worker] {'NON_MATCH': 2295, 'REVIEW': 153, 'MATCH': 52} | deep 750/2,500 | 7.5s
+[stage] 8.1s
+[det 16] {'NON_MATCH': 2295, 'REVIEW': 153, 'MATCH': 52} | GPT queue 137
+[worker] {'NON_MATCH': 2293, 'REVIEW': 146, 'MATCH': 61} | deep 666/2,500 | 7.6s
+[stage] 8.3s
+[det 18] {'NON_MATCH': 2293, 'REVIEW': 146, 'MATCH': 61} | GPT queue 115
+[worker] {'NON_MATCH': 2230, 'REVIEW': 188, 'MATCH': 82} | deep 1,057/2,500 | 9.5s
+[stage] 10.2s
+[det 17] {'NON_MATCH': 2230, 'REVIEW': 188, 'MATCH': 82} | GPT queue 163
+
+--- worker 20 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000020.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000020.csv --queue ...
+
+--- worker 21 | 2,500 A products ---
+
+--- worker 22 | 2,500 A products ---[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000021.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000021.csv --queue ...
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000022.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000022.csv --queue ...
+
+--- worker 23 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000023.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000023.csv --queue ...
+[worker] {'NON_MATCH': 2338, 'REVIEW': 114, 'MATCH': 48} | deep 829/2,500 | 8.1s
+[stage] 8.8s
+[det 20] {'NON_MATCH': 2338, 'REVIEW': 114, 'MATCH': 48} | GPT queue 99
+[worker] {'NON_MATCH': 2287, 'REVIEW': 154, 'MATCH': 59} | deep 991/2,500 | 8.7s
+[stage] 9.3s
+[det 21] {'NON_MATCH': 2287, 'REVIEW': 154, 'MATCH': 59} | GPT queue 129
+[worker] {'NON_MATCH': 2291, 'REVIEW': 146, 'MATCH': 63} | deep 1,025/2,500 | 9.3s
+[stage] 10.0s
+[det 23] {'NON_MATCH': 2291, 'REVIEW': 146, 'MATCH': 63} | GPT queue 128
+[worker] {'REVIEW': 116, 'NON_MATCH': 2328, 'MATCH': 56} | deep 1,193/2,500 | 9.8s
+[stage] 10.4s
+[det 22] {'REVIEW': 116, 'NON_MATCH': 2328, 'MATCH': 56} | GPT queue 99
+
+--- worker 24 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000024.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000024.csv --queue ...
+
+--- worker 25 | 2,500 A products ---
+--- worker 26 | 2,500 A products ---
+
+--- worker 27 | 2,500 A products ---[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000025.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000025.csv --queue ...
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000027.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000027.csv --queue ...
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000026.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000026.csv --queue ...
+[worker] {'NON_MATCH': 2345, 'MATCH': 50, 'REVIEW': 105} | deep 591/2,500 | 6.8s
+[stage] 7.5s
+[det 25] {'NON_MATCH': 2345, 'MATCH': 50, 'REVIEW': 105} | GPT queue 93
+[worker] {'NON_MATCH': 2358, 'REVIEW': 92, 'MATCH': 50} | deep 584/2,500 | 7.3s
+[stage] 8.0s
+[det 26] {'NON_MATCH': 2358, 'REVIEW': 92, 'MATCH': 50} | GPT queue 77
+[worker] {'REVIEW': 114, 'NON_MATCH': 2340, 'MATCH': 46} | deep 747/2,500 | 7.9s
+[stage] 8.6s
+[det 24] {'REVIEW': 114, 'NON_MATCH': 2340, 'MATCH': 46} | GPT queue 91
+[worker] {'NON_MATCH': 2295, 'REVIEW': 135, 'MATCH': 70} | deep 875/2,500 | 8.3s
+[stage] 9.0s
+[det 27] {'NON_MATCH': 2295, 'REVIEW': 135, 'MATCH': 70} | GPT queue 110
+
+--- worker 28 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000028.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000028.csv --queue ...
+
+--- worker 29 | 2,500 A products ---
+
+--- worker 30 | 2,500 A products ---
+
+--- worker 31 | 2,500 A products ---[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000029.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000029.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000030.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000030.csv --queue ...
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000031.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000031.csv --queue ...
+[worker] {'NON_MATCH': 2221, 'REVIEW': 227, 'MATCH': 52} | deep 861/2,500 | 7.8s
+[stage] 8.4s
+[det 31] {'NON_MATCH': 2221, 'REVIEW': 227, 'MATCH': 52} | GPT queue 207
+[worker] {'NON_MATCH': 2146, 'REVIEW': 291, 'MATCH': 63} | deep 1,167/2,500 | 8.7s
+[stage] 9.4s
+[worker] {'NON_MATCH': 2183, 'REVIEW': 235, 'MATCH': 82} | deep 1,085/2,500 | 8.8s
+[stage] 9.4s
+[det 28] {'NON_MATCH': 2146, 'REVIEW': 291, 'MATCH': 63} | GPT queue 263
+[det 30] {'NON_MATCH': 2183, 'REVIEW': 235, 'MATCH': 82} | GPT queue 200
+[worker] {'NON_MATCH': 2057, 'REVIEW': 330, 'MATCH': 113} | deep 1,187/2,500 | 9.4s
+[stage] 10.1s
+[det 29] {'NON_MATCH': 2057, 'REVIEW': 330, 'MATCH': 113} | GPT queue 305
+
+--- worker 32 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000032.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000032.csv --queue ...
+
+--- worker 33 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000033.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000033.csv --queue ...
+
+--- worker 34 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000034.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000034.csv --queue ...
+
+--- worker 35 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000035.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000035.csv --queue ...
+[worker] {'NON_MATCH': 2257, 'REVIEW': 189, 'MATCH': 54} | deep 821/2,500 | 7.6s
+[stage] 8.3s
+[det 35] {'NON_MATCH': 2257, 'REVIEW': 189, 'MATCH': 54} | GPT queue 162
+[worker] {'REVIEW': 198, 'NON_MATCH': 2249, 'MATCH': 53} | deep 871/2,500 | 8.3s
+[stage] 8.9s
+[worker] {'NON_MATCH': 2250, 'REVIEW': 179, 'MATCH': 71} | deep 897/2,500 | 8.3s
+[det 34] {'REVIEW': 198, 'NON_MATCH': 2249, 'MATCH': 53} | GPT queue 163
+[stage] 9.0s
+[det 32] {'NON_MATCH': 2250, 'REVIEW': 179, 'MATCH': 71} | GPT queue 142
+[worker] {'NON_MATCH': 2211, 'REVIEW': 187, 'MATCH': 102} | deep 1,073/2,500 | 9.2s
+[stage] 9.9s
+[det 33] {'NON_MATCH': 2211, 'REVIEW': 187, 'MATCH': 102} | GPT queue 147
+
+--- worker 36 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000036.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000036.csv --queue ...
+
+--- worker 37 | 2,500 A products ---
+--- worker 38 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000037.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000037.csv --queue ...
+
+--- worker 39 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000039.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000039.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000038.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000038.csv --queue ...
+[worker] {'NON_MATCH': 2423, 'REVIEW': 53, 'MATCH': 24} | deep 325/2,500 | 6.1s
+[stage] 6.8s
+[det 39] {'NON_MATCH': 2423, 'REVIEW': 53, 'MATCH': 24} | GPT queue 37
+[worker] {'NON_MATCH': 2376, 'MATCH': 31, 'REVIEW': 93} | deep 440/2,500 | 6.2s
+[stage] 6.9s
+[det 37] {'NON_MATCH': 2376, 'MATCH': 31, 'REVIEW': 93} | GPT queue 87
+[worker] {'NON_MATCH': 2408, 'REVIEW': 62, 'MATCH': 30} | deep 377/2,500 | 6.3s
+[stage] 7.1s
+[det 36] {'NON_MATCH': 2408, 'REVIEW': 62, 'MATCH': 30} | GPT queue 52
+[worker] {'REVIEW': 113, 'NON_MATCH': 2325, 'MATCH': 62} | deep 485/2,500 | 7.0s
+[stage] 7.8s
+[det 38] {'REVIEW': 113, 'NON_MATCH': 2325, 'MATCH': 62} | GPT queue 92
+
+--- worker 40 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000040.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000040.csv --queue ...
+
+--- worker 41 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000041.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000041.csv --queue ...
+
+--- worker 42 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000042.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000042.csv --queue ...
+
+--- worker 43 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000043.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000043.csv --queue ...
+[worker] {'NON_MATCH': 2403, 'REVIEW': 70, 'MATCH': 27} | deep 298/2,500 | 5.7s
+[stage] 6.3s
+[det 42] {'NON_MATCH': 2403, 'REVIEW': 70, 'MATCH': 27} | GPT queue 61
+[worker] {'NON_MATCH': 2393, 'REVIEW': 78, 'MATCH': 29} | deep 334/2,500 | 5.8s
+[stage] 6.4s
+[det 40] {'NON_MATCH': 2393, 'REVIEW': 78, 'MATCH': 29} | GPT queue 73
+[worker] {'NON_MATCH': 2433, 'REVIEW': 59, 'MATCH': 8} | deep 312/2,500 | 5.8s
+[stage] 6.5s
+[det 41] {'NON_MATCH': 2433, 'REVIEW': 59, 'MATCH': 8} | GPT queue 51
+[worker] {'NON_MATCH': 2398, 'REVIEW': 76, 'MATCH': 26} | deep 498/2,500 | 6.2s
+[stage] 6.9s
+[det 43] {'NON_MATCH': 2398, 'REVIEW': 76, 'MATCH': 26} | GPT queue 69
+
+--- worker 44 | 2,500 A products ---
+
+--- worker 45 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000044.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000044.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000045.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000045.csv --queue ...
+
+--- worker 46 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000046.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000046.csv --queue ...
+
+--- worker 47 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000047.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000047.csv --queue ...
+[worker] {'NON_MATCH': 2443, 'MATCH': 15, 'REVIEW': 42} | deep 286/2,500 | 5.6s
+[stage] 6.5s
+[det 47] {'NON_MATCH': 2443, 'MATCH': 15, 'REVIEW': 42} | GPT queue 41
+[worker] {'NON_MATCH': 2400, 'REVIEW': 64, 'MATCH': 36} | deep 354/2,500 | 6.0s
+[stage] 6.7s
+[det 44] {'NON_MATCH': 2400, 'REVIEW': 64, 'MATCH': 36} | GPT queue 51
+[worker] {'NON_MATCH': 2409, 'REVIEW': 68, 'MATCH': 23} | deep 330/2,500 | 6.2s
+[stage] 6.9s
+[worker] {'NON_MATCH': 2414, 'MATCH': 22, 'REVIEW': 64} | deep 428/2,500 | 6.3s
+[stage] 6.9s
+[det 46] {'NON_MATCH': 2409, 'REVIEW': 68, 'MATCH': 23} | GPT queue 58
+[det 45] {'NON_MATCH': 2414, 'MATCH': 22, 'REVIEW': 64} | GPT queue 58
+
+--- worker 48 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000048.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000048.csv --queue ...
+
+--- worker 49 | 2,500 A products ---
+--- worker 50 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000050.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000050.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000049.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000049.csv --queue ...
+
+--- worker 51 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000051.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000051.csv --queue ...
+[worker] {'REVIEW': 61, 'NON_MATCH': 2427, 'MATCH': 12} | deep 361/2,500 | 6.2s
+[stage] 6.9s
+[det 48] {'REVIEW': 61, 'NON_MATCH': 2427, 'MATCH': 12} | GPT queue 50
+[worker] {'NON_MATCH': 2175, 'REVIEW': 215, 'MATCH': 110} | deep 1,085/2,500 | 8.8s
+[stage] 9.4s
+[det 50] {'NON_MATCH': 2175, 'REVIEW': 215, 'MATCH': 110} | GPT queue 163
+[worker] {'NON_MATCH': 2162, 'REVIEW': 218, 'MATCH': 120} | deep 1,222/2,500 | 9.3s
+[stage] 10.0s
+[det 49] {'NON_MATCH': 2162, 'REVIEW': 218, 'MATCH': 120} | GPT queue 171
+[worker] {'NON_MATCH': 2193, 'REVIEW': 209, 'MATCH': 98} | deep 1,293/2,500 | 9.4s
+[stage] 10.2s
+[det 51] {'NON_MATCH': 2193, 'REVIEW': 209, 'MATCH': 98} | GPT queue 172
+
+--- worker 52 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000052.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000052.csv --queue ...
+
+--- worker 53 | 2,500 A products ---
+
+--- worker 54 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000053.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000053.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000054.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000054.csv --queue ...
+
+--- worker 55 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000055.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000055.csv --queue ...
+[worker] {'NON_MATCH': 2389, 'REVIEW': 84, 'MATCH': 27} | deep 506/2,500 | 6.4s
+[stage] 7.2s
+[det 53] {'NON_MATCH': 2389, 'REVIEW': 84, 'MATCH': 27} | GPT queue 70
+[worker] {'MATCH': 48, 'NON_MATCH': 2297, 'REVIEW': 155} | deep 793/2,500 | 7.6s
+[stage] 8.3s
+[det 54] {'MATCH': 48, 'NON_MATCH': 2297, 'REVIEW': 155} | GPT queue 121
+[worker] {'REVIEW': 125, 'NON_MATCH': 2332, 'MATCH': 43} | deep 816/2,500 | 7.7s
+[stage] 8.3s
+[det 55] {'REVIEW': 125, 'NON_MATCH': 2332, 'MATCH': 43} | GPT queue 111
+[worker] {'REVIEW': 131, 'NON_MATCH': 2315, 'MATCH': 54} | deep 819/2,500 | 7.8s
+[stage] 8.6s
+[det 52] {'REVIEW': 131, 'NON_MATCH': 2315, 'MATCH': 54} | GPT queue 95
+
+--- worker 56 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000056.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000056.csv --queue ...
+
+--- worker 57 | 2,500 A products ---
+--- worker 58 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000058.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000058.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000057.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000057.csv --queue ...
+
+--- worker 59 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000059.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000059.csv --queue ...
+[worker] {'NON_MATCH': 2420, 'REVIEW': 56, 'MATCH': 24} | deep 429/2,500 | 6.5s
+[stage] 7.2s
+[det 59] {'NON_MATCH': 2420, 'REVIEW': 56, 'MATCH': 24} | GPT queue 52
+[worker] {'NON_MATCH': 2396, 'REVIEW': 72, 'MATCH': 32} | deep 519/2,500 | 6.9s
+[stage] 7.6s
+[det 58] {'NON_MATCH': 2396, 'REVIEW': 72, 'MATCH': 32} | GPT queue 59
+[worker] {'NON_MATCH': 2359, 'REVIEW': 110, 'MATCH': 31} | deep 644/2,500 | 7.2s
+[stage] 7.9s
+[det 57] {'NON_MATCH': 2359, 'REVIEW': 110, 'MATCH': 31} | GPT queue 83
+[worker] {'NON_MATCH': 2343, 'REVIEW': 130, 'MATCH': 27} | deep 691/2,500 | 7.4s
+[stage] 8.0s
+[det 56] {'NON_MATCH': 2343, 'REVIEW': 130, 'MATCH': 27} | GPT queue 112
+
+--- worker 60 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000060.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000060.csv --queue ...
+
+--- worker 61 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000061.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000061.csv --queue ...
+
+--- worker 62 | 2,500 A products ---
+
+--- worker 63 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000062.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000062.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000063.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000063.csv --queue ...
+[worker] {'NON_MATCH': 2442, 'REVIEW': 45, 'MATCH': 13} | deep 334/2,500 | 3.9s
+[stage] 4.7s
+[det 60] {'NON_MATCH': 2442, 'REVIEW': 45, 'MATCH': 13} | GPT queue 41
+[worker] {'NON_MATCH': 2436, 'REVIEW': 47, 'MATCH': 17} | deep 342/2,500 | 4.0s
+[stage] 4.7s
+[det 61] {'NON_MATCH': 2436, 'REVIEW': 47, 'MATCH': 17} | GPT queue 46
+[worker] {'NON_MATCH': 2419, 'REVIEW': 62, 'MATCH': 19} | deep 382/2,500 | 4.1s
+[stage] 4.8s
+[det 63] {'NON_MATCH': 2419, 'REVIEW': 62, 'MATCH': 19} | GPT queue 57
+[worker] {'NON_MATCH': 2413, 'MATCH': 26, 'REVIEW': 61} | deep 365/2,500 | 4.0s
+[stage] 4.9s
+[det 62] {'NON_MATCH': 2413, 'MATCH': 26, 'REVIEW': 61} | GPT queue 54
+
+--- worker 64 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000064.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000064.csv --queue ...
+
+--- worker 65 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000065.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000065.csv --queue ...
+
+--- worker 66 | 2,500 A products ---
+--- worker 67 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000067.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000067.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000066.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000066.csv --queue ...
+[worker] {'NON_MATCH': 2436, 'MATCH': 19, 'REVIEW': 45} | deep 317/2,500 | 5.0s
+[stage] 5.5s
+[det 65] {'NON_MATCH': 2436, 'MATCH': 19, 'REVIEW': 45} | GPT queue 39
+[worker] {'NON_MATCH': 2424, 'REVIEW': 54, 'MATCH': 22} | deep 393/2,500 | 5.3s
+[stage] 5.8s
+[det 64] {'NON_MATCH': 2424, 'REVIEW': 54, 'MATCH': 22} | GPT queue 47
+[worker] {'NON_MATCH': 2405, 'REVIEW': 71, 'MATCH': 24} | deep 521/2,500 | 5.9s
+[stage] 6.4s
+[det 67] {'NON_MATCH': 2405, 'REVIEW': 71, 'MATCH': 24} | GPT queue 68
+[worker] {'NON_MATCH': 2379, 'MATCH': 25, 'REVIEW': 96} | deep 559/2,500 | 6.0s
+[stage] 6.5s
+[det 66] {'NON_MATCH': 2379, 'MATCH': 25, 'REVIEW': 96} | GPT queue 91
+
+--- worker 68 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000068.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000068.csv --queue ...
+
+--- worker 69 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000069.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000069.csv --queue ...
+
+--- worker 70 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000070.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000070.csv --queue ...
+
+--- worker 71 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000071.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000071.csv --queue ...
+[worker] {'NON_MATCH': 2391, 'MATCH': 27, 'REVIEW': 82} | deep 547/2,500 | 6.0s
+[stage] 6.6s
+[worker] {'NON_MATCH': 2403, 'REVIEW': 70, 'MATCH': 27} | deep 514/2,500 | 6.0s
+[stage] 6.7s
+[det 70] {'NON_MATCH': 2391, 'MATCH': 27, 'REVIEW': 82} | GPT queue 78
+[worker] {'NON_MATCH': 2373, 'MATCH': 30, 'REVIEW': 97} | deep 548/2,500 | 6.1s
+[det 69] {'NON_MATCH': 2403, 'REVIEW': 70, 'MATCH': 27} | GPT queue 66
+[stage] 6.8s
+[det 68] {'NON_MATCH': 2373, 'MATCH': 30, 'REVIEW': 97} | GPT queue 88
+[worker] {'NON_MATCH': 2387, 'MATCH': 31, 'REVIEW': 82} | deep 557/2,500 | 6.3s
+[stage] 6.9s
+[det 71] {'NON_MATCH': 2387, 'MATCH': 31, 'REVIEW': 82} | GPT queue 74
+
+--- worker 72 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000072.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000072.csv --queue ...
+
+--- worker 73 | 2,500 A products ---
+--- worker 74 | 2,500 A products ---
+
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000074.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000074.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000073.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000073.csv --queue ...
+
+--- worker 75 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000075.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000075.csv --queue ...
+[worker] {'NON_MATCH': 2386, 'MATCH': 30, 'REVIEW': 84} | deep 540/2,500 | 6.2s
+[stage] 6.8s
+[worker] {'NON_MATCH': 2398, 'REVIEW': 76, 'MATCH': 26} | deep 557/2,500 | 6.2s
+[stage] 6.9s
+[det 75] {'NON_MATCH': 2386, 'MATCH': 30, 'REVIEW': 84} | GPT queue 77
+[det 72] {'NON_MATCH': 2398, 'REVIEW': 76, 'MATCH': 26} | GPT queue 70
+[worker] {'NON_MATCH': 2375, 'MATCH': 32, 'REVIEW': 93} | deep 515/2,500 | 6.3s
+[stage] 7.0s
+[det 74] {'NON_MATCH': 2375, 'MATCH': 32, 'REVIEW': 93} | GPT queue 82
+[worker] {'NON_MATCH': 2352, 'REVIEW': 102, 'MATCH': 46} | deep 581/2,500 | 6.4s
+[stage] 7.1s
+[det 73] {'NON_MATCH': 2352, 'REVIEW': 102, 'MATCH': 46} | GPT queue 86
+
+--- worker 76 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000076.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000076.csv --queue ...
+
+--- worker 77 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000077.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000077.csv --queue ...
+
+--- worker 78 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000078.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000078.csv --queue ...
+
+--- worker 79 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000079.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000079.csv --queue ...
+[worker] {'NON_MATCH': 2355, 'MATCH': 41, 'REVIEW': 104} | deep 590/2,500 | 6.4s
+[stage] 7.0s
+[det 76] {'NON_MATCH': 2355, 'MATCH': 41, 'REVIEW': 104} | GPT queue 96
+[worker] {'NON_MATCH': 2311, 'MATCH': 46, 'REVIEW': 143} | deep 744/2,500 | 6.8s
+[stage] 7.5s
+[det 78] {'NON_MATCH': 2311, 'MATCH': 46, 'REVIEW': 143} | GPT queue 122
+[worker] {'NON_MATCH': 2289, 'REVIEW': 148, 'MATCH': 63} | deep 871/2,500 | 7.5s
+[stage] 8.1s
+[det 77] {'NON_MATCH': 2289, 'REVIEW': 148, 'MATCH': 63} | GPT queue 99
+[worker] {'NON_MATCH': 2135, 'REVIEW': 244, 'MATCH': 121} | deep 1,250/2,500 | 9.5s
+[stage] 10.2s
+[det 79] {'NON_MATCH': 2135, 'REVIEW': 244, 'MATCH': 121} | GPT queue 187
+
+--- worker 80 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000080.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000080.csv --queue ...
+
+--- worker 81 | 2,500 A products ---
+
+--- worker 82 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000081.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000081.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000082.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000082.csv --queue ...
+
+--- worker 83 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000083.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000083.csv --queue ...
+[worker] {'NON_MATCH': 2245, 'REVIEW': 177, 'MATCH': 78} | deep 835/2,500 | 6.9s
+[stage] 7.5s
+[det 82] {'NON_MATCH': 2245, 'REVIEW': 177, 'MATCH': 78} | GPT queue 146
+[worker] {'NON_MATCH': 2260, 'MATCH': 78, 'REVIEW': 162} | deep 874/2,500 | 7.3s
+[stage] 7.9s
+[det 80] {'NON_MATCH': 2260, 'MATCH': 78, 'REVIEW': 162} | GPT queue 132
+[worker] {'NON_MATCH': 2226, 'REVIEW': 219, 'MATCH': 55} | deep 996/2,500 | 7.7s
+[stage] 8.4s
+[det 81] {'NON_MATCH': 2226, 'REVIEW': 219, 'MATCH': 55} | GPT queue 185
+[worker] {'NON_MATCH': 2098, 'REVIEW': 269, 'MATCH': 133} | deep 1,413/2,500 | 10.1s
+[stage] 10.8s
+[det 83] {'NON_MATCH': 2098, 'REVIEW': 269, 'MATCH': 133} | GPT queue 197
+
+--- worker 84 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000084.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000084.csv --queue ...
+
+--- worker 85 | 2,500 A products ---
+
+--- worker 86 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000085.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000085.csv --queue ...
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000086.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000086.csv --queue ...
+
+--- worker 87 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000087.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000087.csv --queue ...
+[worker] {'NON_MATCH': 2281, 'REVIEW': 155, 'MATCH': 64} | deep 784/2,500 | 6.7s
+[stage] 7.3s
+[det 85] {'NON_MATCH': 2281, 'REVIEW': 155, 'MATCH': 64} | GPT queue 129
+[worker] {'NON_MATCH': 2182, 'MATCH': 102, 'REVIEW': 216} | deep 1,087/2,500 | 8.1s
+[stage] 8.7s
+[det 84] {'NON_MATCH': 2182, 'MATCH': 102, 'REVIEW': 216} | GPT queue 176
+[worker] {'NON_MATCH': 2108, 'MATCH': 166, 'REVIEW': 226} | deep 1,417/2,500 | 9.9s
+[stage] 10.5s
+[det 87] {'NON_MATCH': 2108, 'MATCH': 166, 'REVIEW': 226} | GPT queue 177
+[worker] {'NON_MATCH': 2080, 'REVIEW': 284, 'MATCH': 136} | deep 1,503/2,500 | 10.2s
+[stage] 10.8s
+[det 86] {'NON_MATCH': 2080, 'REVIEW': 284, 'MATCH': 136} | GPT queue 232
+[adaptive] sustained worker slowdown detected (10.6s vs 4.8s baseline); reducing concurrency to 2 to limit CPU/thermal pressure
+
+--- worker 88 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000088.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000088.csv --queue ...
+
+--- worker 89 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000089.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000089.csv --queue ...
+[worker] {'REVIEW': 170, 'NON_MATCH': 2308, 'MATCH': 22} | deep 651/2,500 | 5.8s
+[stage] 6.4s
+[det 89] {'REVIEW': 170, 'NON_MATCH': 2308, 'MATCH': 22} | GPT queue 142
+[worker] {'NON_MATCH': 2151, 'REVIEW': 220, 'MATCH': 129} | deep 1,174/2,500 | 8.8s
+[stage] 9.4s
+[det 88] {'NON_MATCH': 2151, 'REVIEW': 220, 'MATCH': 129} | GPT queue 188
+
+--- worker 90 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000090.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000090.csv --queue ...
+
+--- worker 91 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000091.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000091.csv --queue ...
+[worker] {'NON_MATCH': 2313, 'REVIEW': 134, 'MATCH': 53} | deep 648/2,500 | 6.5s
+[stage] 7.1s
+[det 91] {'NON_MATCH': 2313, 'REVIEW': 134, 'MATCH': 53} | GPT queue 120
+[worker] {'NON_MATCH': 2203, 'MATCH': 30, 'REVIEW': 267} | deep 924/2,500 | 7.3s
+[stage] 7.9s
+[det 90] {'NON_MATCH': 2203, 'MATCH': 30, 'REVIEW': 267} | GPT queue 246
+
+--- worker 92 | 2,500 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000092.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000092.csv --queue ...
+
+--- worker 93 | 699 A products ---
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --det --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\tmp\A_chunk_000093.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\deterministic\chunk_000093.csv --queue ...
+[worker] {'REVIEW': 15, 'NON_MATCH': 682, 'MATCH': 2} | deep 72/699 | 1.2s
+[stage] 1.8s
+[det 93] {'REVIEW': 15, 'NON_MATCH': 682, 'MATCH': 2} | GPT queue 12
+[worker] {'NON_MATCH': 2059, 'REVIEW': 316, 'MATCH': 125} | deep 1,205/2,500 | 7.7s
+[stage] 8.3s
+[det 92] {'NON_MATCH': 2059, 'REVIEW': 316, 'MATCH': 125} | GPT queue 286
+
+========== PASS 2: REASONED STRUCTURED SEMANTIC ADJUDICATION ==========
+[gpt] selected 10,550 unresolved products | at most 440 structured requests | concurrency 12 | reasoning low
+[run] C:\Users\rayns\anaconda3\python.exe C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY\betterbasket_worker.py --gpt --a C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\gpt_queue\all_queued_products.csv --index C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_compact_b6a645c58d85f812.pkl --db C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\cache\store_b_details_b6a645c58d85f812.sqlite --out C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\gpt_overrides\all.csv
+[gpt][warn] low content-filter case skipped: HTTP 400: {"error":{"message":"The response was filtered due to the prompt triggering Azure OpenAI's content management policy. Please modify your prompt and retry. To learn more about our content filtering policies please read our documentation: https://go.microsoft.com/fwlink/?linkid=2198766","type":null,"param":"prompt","code":"content_filter","status":400,"innererror":{"code":"ResponsibleAIPolicyViolation","content_filter_result":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":true,"severity":"medium"},"violence":{"filtered":false,"severity":"safe"}}}}}
+[gpt] escalating 756 ambiguous case(s) to medium reasoning
+[stage] 872.5s
+[gpt] {'MATCH': 4911, 'REVIEW': 5512, 'NON_MATCH': 127}
+
+========== FINAL MERGE ==========
+[v17] final identity/catalog guard deferred 992 provisional MATCH row(s)
+Processed: 233,199
+MATCH: 8,666 | NON_MATCH: 216,166 | REVIEW: 8,367
+[v17] metadata recovery +0 | final identity/catalog reviews 992
+CSV: C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\submission_matches.csv
+BetterBasket minimum (4,000) satisfied.
+
+========== FINAL PRECISION POLISH ==========
+[v17-polish] inspected 8,666 certified MATCH rows; high-risk demotions=197
+  POLISH_COLLISION_AMBIGUOUS_COUNT: 64
+  POLISH_OUTER_COUNT_VS_SINGLE: 56
+  POLISH_COLLISION_AMBIGUOUS_SIZE: 21
+  POLISH_B_MULTIPACK_VS_A_SINGLE: 8
+  POLISH_COLLISION_NET_SIZE: 6
+  POLISH_COLLISION_COUNT_MISMATCH_TO_B: 6
+  POLISH_PRIVATE_FAT_STATUS: 5
+  POLISH_NATIONAL_HOT_SPICY_VARIANT: 3
+  POLISH_OUTER_PACK_NET_MISMATCH: 3
+  POLISH_NATIONAL_DEEP_CONDITIONER_ROLE: 2
+  POLISH_NATIONAL_UNSWEET_VARIANT: 2
+  POLISH_NATIONAL_EXPLICIT_MINT_VARIANT: 2
+  POLISH_PRIVATE_CUT_FORM: 2
+  POLISH_NATIONAL_MUSHROOM_VARIANT: 2
+  POLISH_NATIONAL_CONTAINER_FORMAT: 1
+  POLISH_COUNT_MISMATCH_20_VS_10: 1
+  POLISH_COUNT_MISMATCH_2_VS_4: 1
+  POLISH_COUNT_MISMATCH_12_VS_10: 1
+  POLISH_PREGNANCY_COUNT_3_VS_2: 1
+  POLISH_NATIONAL_TEA_TYPE: 1
+  POLISH_PREGNANCY_COUNT_5_VS_2: 1
+  POLISH_COUNT_MISMATCH_72_VS_10: 1
+  POLISH_NATIONAL_DENTASTIX_FLAVOR: 1
+  POLISH_NATIONAL_MAPLE_VARIANT: 1
+  POLISH_NATIONAL_SCENT_VARIANT: 1
+  POLISH_COUNT_MISMATCH_120_VS_20: 1
+  POLISH_NATIONAL_SODIUM_VARIANT: 1
+  POLISH_PREGNANCY_COUNT_1_VS_3: 1
+  POLISH_NATIONAL_WHITENING_VARIANT: 1
+[v17-polish] final MATCH=8,469 NON_MATCH=216,166 REVIEW=8,564
+[v17-polish] completed in 9.66s; submission rewritten: C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\submission_matches.csv
+
+Compare a specific Dataset A product against B? [y/N]: n
+(base) PS C:\Users\rayns\Downloads\BetterBasket_FINAL_CODE_ONLY\BetterBasket_FINAL_CODE_ONLY>

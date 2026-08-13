@@ -1,0 +1,1011 @@
+{
+  "version": "audited_v17_final_submission_count_uniqueness_guard",
+  "artifact_role": "derived_documentation_view",
+  "runtime_source_of_truth": [
+    "betterbasket_non_match_algorithm.py",
+    "betterbasket_product_evidence.py",
+    "product_match_criteria_v2_audited.json"
+  ],
+  "purpose": "Machine-readable view of the independent Non-match / contradiction side of the frozen BetterBasket matcher. This file is explanatory and is not loaded by the runtime.",
+  "architecture_rule": "Match evidence and Non-match evidence are independent. A low Non-match score does not imply MATCH; the routing module combines both sides.",
+  "canonical_attribute_count": 140,
+  "contradiction_atomic_criteria_count": 140,
+  "contradiction_atomic_criteria": [
+    {
+      "criterion_id": "C001-N",
+      "attribute_id": "C001",
+      "attribute": "brand",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C002-N",
+      "attribute_id": "C002",
+      "attribute": "brand_type",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C003-N",
+      "attribute_id": "C003",
+      "attribute": "sub_brand",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C004-N",
+      "attribute_id": "C004",
+      "attribute": "product_line",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C005-N",
+      "attribute_id": "C005",
+      "attribute": "functional_name",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C006-N",
+      "attribute_id": "C006",
+      "attribute": "product_family",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C007-N",
+      "attribute_id": "C007",
+      "attribute": "model_or_part_identifier",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C008-N",
+      "attribute_id": "C008",
+      "attribute": "variant_name",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C009-N",
+      "attribute_id": "C009",
+      "attribute": "usage_function",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C010-N",
+      "attribute_id": "C010",
+      "attribute": "target_surface_or_body_area",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C011-N",
+      "attribute_id": "C011",
+      "attribute": "compatibility",
+      "group": "identity",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C012-N",
+      "attribute_id": "C012",
+      "attribute": "net_weight",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C013-N",
+      "attribute_id": "C013",
+      "attribute": "net_volume",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C014-N",
+      "attribute_id": "C014",
+      "attribute": "declared_count",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C015-N",
+      "attribute_id": "C015",
+      "attribute": "pack_structure",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C016-N",
+      "attribute_id": "C016",
+      "attribute": "normalized_total_quantity",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C017-N",
+      "attribute_id": "C017",
+      "attribute": "piece_weight",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C018-N",
+      "attribute_id": "C018",
+      "attribute": "variable_weight_flag",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C019-N",
+      "attribute_id": "C019",
+      "attribute": "billed_by_weight",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C020-N",
+      "attribute_id": "C020",
+      "attribute": "ordered_by_weight",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C021-N",
+      "attribute_id": "C021",
+      "attribute": "bundle_flag",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C022-N",
+      "attribute_id": "C022",
+      "attribute": "assortment_flag",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C023-N",
+      "attribute_id": "C023",
+      "attribute": "packaging_form",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C024-N",
+      "attribute_id": "C024",
+      "attribute": "refill_vs_starter_kit",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C025-N",
+      "attribute_id": "C025",
+      "attribute": "capacity",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C026-N",
+      "attribute_id": "C026",
+      "attribute": "flavor",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C027-N",
+      "attribute_id": "C027",
+      "attribute": "scent",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C028-N",
+      "attribute_id": "C028",
+      "attribute": "color",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C029-N",
+      "attribute_id": "C029",
+      "attribute": "shade",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C030-N",
+      "attribute_id": "C030",
+      "attribute": "texture",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C031-N",
+      "attribute_id": "C031",
+      "attribute": "style_or_cut",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C032-N",
+      "attribute_id": "C032",
+      "attribute": "shape",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C033-N",
+      "attribute_id": "C033",
+      "attribute": "physical_state",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C034-N",
+      "attribute_id": "C034",
+      "attribute": "storage_state",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C035-N",
+      "attribute_id": "C035",
+      "attribute": "preparation_state",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C036-N",
+      "attribute_id": "C036",
+      "attribute": "concentrate_status",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C037-N",
+      "attribute_id": "C037",
+      "attribute": "spice_heat_level",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C038-N",
+      "attribute_id": "C038",
+      "attribute": "coating_breading",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C039-N",
+      "attribute_id": "C039",
+      "attribute": "filled_stuffed_status",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C040-N",
+      "attribute_id": "C040",
+      "attribute": "smoked_cured_status",
+      "group": "form_variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C041-N",
+      "attribute_id": "C041",
+      "attribute": "base_ingredient",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C042-N",
+      "attribute_id": "C042",
+      "attribute": "protein_source",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C043-N",
+      "attribute_id": "C043",
+      "attribute": "meat_species",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C044-N",
+      "attribute_id": "C044",
+      "attribute": "meat_cut",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C045-N",
+      "attribute_id": "C045",
+      "attribute": "grind_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C046-N",
+      "attribute_id": "C046",
+      "attribute": "bone_state",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C047-N",
+      "attribute_id": "C047",
+      "attribute": "skin_state",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C048-N",
+      "attribute_id": "C048",
+      "attribute": "seafood_species",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C049-N",
+      "attribute_id": "C049",
+      "attribute": "produce_species",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C050-N",
+      "attribute_id": "C050",
+      "attribute": "produce_variety",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C051-N",
+      "attribute_id": "C051",
+      "attribute": "produce_form",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C052-N",
+      "attribute_id": "C052",
+      "attribute": "ripeness_or_maturity",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C053-N",
+      "attribute_id": "C053",
+      "attribute": "organic_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C054-N",
+      "attribute_id": "C054",
+      "attribute": "gluten_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C055-N",
+      "attribute_id": "C055",
+      "attribute": "sugar_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C056-N",
+      "attribute_id": "C056",
+      "attribute": "sodium_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C057-N",
+      "attribute_id": "C057",
+      "attribute": "fat_level",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C058-N",
+      "attribute_id": "C058",
+      "attribute": "lactose_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C059-N",
+      "attribute_id": "C059",
+      "attribute": "vegan_vegetarian_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C060-N",
+      "attribute_id": "C060",
+      "attribute": "kosher_halal_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C061-N",
+      "attribute_id": "C061",
+      "attribute": "ingredient_signature",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C062-N",
+      "attribute_id": "C062",
+      "attribute": "allergen_signature",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C063-N",
+      "attribute_id": "C063",
+      "attribute": "sweetener_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C064-N",
+      "attribute_id": "C064",
+      "attribute": "fortification",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C065-N",
+      "attribute_id": "C065",
+      "attribute": "caffeine_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C066-N",
+      "attribute_id": "C066",
+      "attribute": "carbonation_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C067-N",
+      "attribute_id": "C067",
+      "attribute": "juice_percentage",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C068-N",
+      "attribute_id": "C068",
+      "attribute": "milk_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C069-N",
+      "attribute_id": "C069",
+      "attribute": "cheese_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C070-N",
+      "attribute_id": "C070",
+      "attribute": "cheese_aging",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C071-N",
+      "attribute_id": "C071",
+      "attribute": "beverage_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C072-N",
+      "attribute_id": "C072",
+      "attribute": "coffee_roast",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C073-N",
+      "attribute_id": "C073",
+      "attribute": "coffee_format",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C074-N",
+      "attribute_id": "C074",
+      "attribute": "tea_type",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C075-N",
+      "attribute_id": "C075",
+      "attribute": "alcohol_class",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C076-N",
+      "attribute_id": "C076",
+      "attribute": "alcohol_style",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C077-N",
+      "attribute_id": "C077",
+      "attribute": "alcohol_strength_abv",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C078-N",
+      "attribute_id": "C078",
+      "attribute": "vintage",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C079-N",
+      "attribute_id": "C079",
+      "attribute": "origin_region_appellation",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C080-N",
+      "attribute_id": "C080",
+      "attribute": "active_ingredient",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C081-N",
+      "attribute_id": "C081",
+      "attribute": "active_strength",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C082-N",
+      "attribute_id": "C082",
+      "attribute": "dosage_form",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C083-N",
+      "attribute_id": "C083",
+      "attribute": "route_of_administration",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C084-N",
+      "attribute_id": "C084",
+      "attribute": "release_type",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C085-N",
+      "attribute_id": "C085",
+      "attribute": "symptom_or_indication",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C086-N",
+      "attribute_id": "C086",
+      "attribute": "medicated_status",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C087-N",
+      "attribute_id": "C087",
+      "attribute": "spf",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C088-N",
+      "attribute_id": "C088",
+      "attribute": "absorbency",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C089-N",
+      "attribute_id": "C089",
+      "attribute": "device_type",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C090-N",
+      "attribute_id": "C090",
+      "attribute": "finish",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C091-N",
+      "attribute_id": "C091",
+      "attribute": "coverage_level",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C092-N",
+      "attribute_id": "C092",
+      "attribute": "hold_level",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C093-N",
+      "attribute_id": "C093",
+      "attribute": "hair_type",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C094-N",
+      "attribute_id": "C094",
+      "attribute": "skin_type",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C095-N",
+      "attribute_id": "C095",
+      "attribute": "care_concern",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C096-N",
+      "attribute_id": "C096",
+      "attribute": "applicator_type",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C097-N",
+      "attribute_id": "C097",
+      "attribute": "waterproof_status",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C098-N",
+      "attribute_id": "C098",
+      "attribute": "washable_longwear_status",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C099-N",
+      "attribute_id": "C099",
+      "attribute": "disposable_reusable_status",
+      "group": "health_personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C100-N",
+      "attribute_id": "C100",
+      "attribute": "baby_stage",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C101-N",
+      "attribute_id": "C101",
+      "attribute": "diaper_size",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C102-N",
+      "attribute_id": "C102",
+      "attribute": "feeding_stage",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C103-N",
+      "attribute_id": "C103",
+      "attribute": "nipple_flow",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C104-N",
+      "attribute_id": "C104",
+      "attribute": "formula_base",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C105-N",
+      "attribute_id": "C105",
+      "attribute": "pet_species",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C106-N",
+      "attribute_id": "C106",
+      "attribute": "pet_life_stage",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C107-N",
+      "attribute_id": "C107",
+      "attribute": "pet_size_or_breed",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C108-N",
+      "attribute_id": "C108",
+      "attribute": "pet_food_texture",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C109-N",
+      "attribute_id": "C109",
+      "attribute": "pet_diet_function",
+      "group": "baby_pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C110-N",
+      "attribute_id": "C110",
+      "attribute": "footwear_size_compatibility",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C111-N",
+      "attribute_id": "C111",
+      "attribute": "target_age_range",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C112-N",
+      "attribute_id": "C112",
+      "attribute": "target_audience",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C113-N",
+      "attribute_id": "C113",
+      "attribute": "durable_material",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C114-N",
+      "attribute_id": "C114",
+      "attribute": "electrical_voltage",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C115-N",
+      "attribute_id": "C115",
+      "attribute": "wattage",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C116-N",
+      "attribute_id": "C116",
+      "attribute": "connector_type",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C117-N",
+      "attribute_id": "C117",
+      "attribute": "battery_spec",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C118-N",
+      "attribute_id": "C118",
+      "attribute": "storage_capacity",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C119-N",
+      "attribute_id": "C119",
+      "attribute": "theme_or_franchise",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C120-N",
+      "attribute_id": "C120",
+      "attribute": "component_piece_count",
+      "group": "durable_apparel",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C121-N",
+      "attribute_id": "C121",
+      "attribute": "canonical_category",
+      "group": "routing",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C122-N",
+      "attribute_id": "C122",
+      "attribute": "canonical_subcategory",
+      "group": "routing",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C123-N",
+      "attribute_id": "C123",
+      "attribute": "occasion_or_holiday",
+      "group": "variant",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C124-N",
+      "attribute_id": "C124",
+      "attribute": "wine_varietal",
+      "group": "alcohol",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C125-N",
+      "attribute_id": "C125",
+      "attribute": "ground_meat_lean_fat_ratio",
+      "group": "food",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C126-N",
+      "attribute_id": "C126",
+      "attribute": "egg_size_grade",
+      "group": "food",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C127-N",
+      "attribute_id": "C127",
+      "attribute": "egg_production_method",
+      "group": "food",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C128-N",
+      "attribute_id": "C128",
+      "attribute": "paper_ply",
+      "group": "household",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C129-N",
+      "attribute_id": "C129",
+      "attribute": "rated_use_count",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C130-N",
+      "attribute_id": "C130",
+      "attribute": "dimension_signature",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C131-N",
+      "attribute_id": "C131",
+      "attribute": "light_bulb_base",
+      "group": "household_tech",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C132-N",
+      "attribute_id": "C132",
+      "attribute": "light_bulb_shape",
+      "group": "household_tech",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C133-N",
+      "attribute_id": "C133",
+      "attribute": "light_output_lumens",
+      "group": "household_tech",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C134-N",
+      "attribute_id": "C134",
+      "attribute": "light_color_temperature",
+      "group": "household_tech",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C135-N",
+      "attribute_id": "C135",
+      "attribute": "light_watt_equivalent",
+      "group": "household_tech",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C136-N",
+      "attribute_id": "C136",
+      "attribute": "bristle_firmness",
+      "group": "personal_care",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C137-N",
+      "attribute_id": "C137",
+      "attribute": "pet_litter_clumping_status",
+      "group": "pet",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C138-N",
+      "attribute_id": "C138",
+      "attribute": "water_source_treatment_type",
+      "group": "beverage",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C139-N",
+      "attribute_id": "C139",
+      "attribute": "non_gmo_status",
+      "group": "food_composition",
+      "kind": "contradiction_evidence"
+    },
+    {
+      "criterion_id": "C140-N",
+      "attribute_id": "C140",
+      "attribute": "closure_style",
+      "group": "quantity_packaging",
+      "kind": "contradiction_evidence"
+    }
+  ],
+  "runtime_scoring": {
+    "minimum_pair_fact_quality_for_conflict_evidence": 0.72,
+    "hard_veto_quality_floor": 0.84,
+    "hard_veto_severity_floor": 0.55,
+    "clustered_conflicts": "Only the strongest conflict contribution is retained within the same contradiction cluster.",
+    "interaction_rule": "Cross-cluster contradiction interactions add bounded second-order evidence.",
+    "score_formula": "(1-exp(-total/8))*(0.70+0.30*min(1, distinct_conflict_groups/3)); any hard veto floors raw Non-match evidence at 0.88.",
+    "output_fields": [
+      "nonmatch_evidence_score",
+      "hard_veto",
+      "hard_veto_rules",
+      "atomic_conflict_count",
+      "modifier_asymmetry_count",
+      "modifier_asymmetries"
+    ]
+  }
+}
